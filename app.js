@@ -2,10 +2,12 @@
 const die = document.getElementById('dice-box');
 const advice = document.getElementById('advice');
 const adviceID = document.querySelector('.advice-id');
-const voices = document.getElementById('voice-options');
+const voiceOptions = document.getElementById('voice-options');
 
 var synth = window.speechSynthesis;
 let utterance = new SpeechSynthesisUtterance();
+
+
 
 
 // Fetch Advice
@@ -26,6 +28,8 @@ const getAdvice = () => {
         })
 }
 
+
+
 const readAdvice = () => {
     // get advice text
     utterance.text = advice.innerText;
@@ -33,6 +37,21 @@ const readAdvice = () => {
     //read out advice
     synth.speak(utterance);
 }
+
+
+// change voice
+const loadVoice = () => {
+    // get available voices 
+    const voices = synth.getVoices();
+ 
+    for (var i=0; i< voices.length; i++) {
+        const option = document.createElement('option');
+        option.textContent = `${voices[i].name} (${voices[i].lang})`;
+
+        voiceOptions.appendChild(option);
+    }
+}
+loadVoice();
 
 // Event listeners
 die.addEventListener('click', getAdvice);
