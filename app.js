@@ -4,7 +4,7 @@ const advice = document.getElementById('advice');
 const adviceID = document.querySelector('.advice-id');
 const voiceOptions = document.getElementById('voice-options');
 
-// var synth = window.speechSynthesis;
+var synth = window.speechSynthesis;
 let utterance = new SpeechSynthesisUtterance();
 
 
@@ -12,7 +12,7 @@ let utterance = new SpeechSynthesisUtterance();
 
 // Fetch Advice
 const getAdvice = () => {
-    speechSynthesis.cancel()
+    synth.cancel()
 
     // fetch advice from adviceslip API
     fetch('https://api.adviceslip.com/advice')
@@ -35,33 +35,39 @@ const readAdvice = () => {
     utterance.text = advice.innerText;
 
     //read out advice
-    speechSynthesis.speak(utterance);
+    synth.speak(utterance);
 }
 
 
 // change voice
 const loadVoice = () => {
-    const voices = speechSynthesis.getVoices()
-	voices.forEach((voice) => {
+    const voices = speechSynthesis.getVoices();
+
+    voices.forEach((voice) => {
+
+        // create option for each available voice
         const option = document.createElement('option');
-        option.textContent = `${voice.name} (${voice.lang})`;
-        voiceOptions.appendChild(option)
+        option.textContent = voice.name
+        voiceOptions.appendChild(option);     
+
     })
 
     voiceOptions.addEventListener('change', (e) => {
-		speechSynthesis.cancel()
-		const chosenVoice = e.target.value
-		speech.voice = voices[chosenVoice]
+		synth.cancel()
+		const newVoice = e.target.value
+        utterance.voice = voices[newVoice];
 
         readAdvice();
-    })
+})
 }
+
+
 
 
 
 // Event listeners
 die.addEventListener('click', getAdvice);
-speechSynthesis.addEventListener('voiceschanged', loadVoice)
+synth.addEventListener('voiceschanged', loadVoice)
 document.addEventListener('keydown', (e) => {
     if(e.key == 'a') {
         getAdvice();
