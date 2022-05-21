@@ -19,8 +19,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL:  [](https://github.com/Kayzubi/advicegenerator)
-- Live Site URL: [](https://advicegenarator.netlify.app/)
+- Solution URL:  [Github](https://github.com/Kayzubi/advicegenerator)
+- Live Site URL: [Netlify](https://advicegenarator.netlify.app/)
 
 
 ### Built with
